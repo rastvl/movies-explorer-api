@@ -16,7 +16,7 @@ const auth = require('./middlewares/auth.js');
 const cfg = require('./utils/serverConfig.js');
 
 const app = express();
-// body parser
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
