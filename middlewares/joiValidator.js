@@ -44,9 +44,16 @@ const validateLogin = celebrate({
   }),
 });
 
+const validateDeletion = celebrate({
+  params: Joi.object().keys({
+    id: Joi.string().hex().length(24),
+  }),
+});
+
 module.exports = {
   validateProfileUpdate,
   validateNewMovie,
   validateNewUser,
   validateLogin,
+  validateDeletion,
 };

@@ -1,9 +1,9 @@
-const Movie = require('../models/movie.js');
-const { errorMessages, messagges } = require('../utils/constants.js');
-const ServerError = require('../errors/ServerError.js');
-const ForbiddenError = require('../errors/ForbiddenError.js');
-const NotFoundError = require('../errors/NotFoundError.js');
-const BadRequestError = require('../errors/BadRequestError.js');
+const Movie = require('../models/movie');
+const { errorMessages, messagges } = require('../utils/constants');
+const ServerError = require('../errors/ServerError');
+const ForbiddenError = require('../errors/ForbiddenError');
+const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
 
 const handleError = (err, next) => {
   if (err.name === 'CastError') {
@@ -67,7 +67,7 @@ const deleteMovie = (req, res, next) => {
           res.send({
             message: messagges.deleteMovie,
           });
-        });
+        }).catch(next);
       } else {
         throw new NotFoundError(errorMessages.notFoundDB);
       }

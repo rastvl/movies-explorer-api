@@ -1,12 +1,11 @@
-// const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const User = require('../models/user.js');
-const NotFoundError = require('../errors/NotFoundError.js');
-const BadRequestError = require('../errors/BadRequestError.js');
-const ConflictError = require('../errors/ConflictError.js');
-const AuthError = require('../errors/AuthError.js');
-const { errorMessages } = require('../utils/constants.js');
+const User = require('../models/user');
+const NotFoundError = require('../errors/NotFoundError');
+const BadRequestError = require('../errors/BadRequestError');
+const ConflictError = require('../errors/ConflictError');
+const AuthError = require('../errors/AuthError');
+const { errorMessages } = require('../utils/constants');
 
 const handleError = (err, next) => {
   if (err.name === 'CastError') {
@@ -57,7 +56,13 @@ const createUser = (req, res, next) => {
         email,
         password: hash,
       })
-        .then((user) => res.send(user))
+        .then((user) => {
+          res.send({
+            name: user.name,
+            email: user.email,
+            _id: user._id,
+          });
+        })
         .catch((err) => {
           if (err.name === 'ValidationError') {
             throw new BadRequestError(errorMessages.badRequestNewUser);

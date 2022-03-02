@@ -4,16 +4,14 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
-// const { validateNewUser, validateLogin } = require('./middlewares/joiValidator.js');
-// const { createUser, login } = require('./controllers/users.js');
-const { requestLogger, errorLogger } = require('./middlewares/logger.js');
-const { limiter } = require('./middlewares/rateLimiter.js');
-const router = require('./routes/index.js');
-const NotFoundError = require('./errors/NotFoundError.js');
-const { errorMessages } = require('./utils/constants.js');
-const { cors } = require('./middlewares/cors.js');
-const auth = require('./middlewares/auth.js');
-const cfg = require('./utils/serverConfig.js');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { limiter } = require('./middlewares/rateLimiter');
+const router = require('./routes/index');
+const NotFoundError = require('./errors/NotFoundError');
+const { errorMessages } = require('./utils/constants');
+const { cors } = require('./middlewares/cors');
+const auth = require('./middlewares/auth');
+const cfg = require('./utils/serverConfig');
 
 const app = express();
 
@@ -33,11 +31,6 @@ app.use(limiter);
 
 app.use(helmet());
 
-// app.post('/signup', validateNewUser, createUser);
-// app.post('/signin', validateLogin, login);
-
-// app.use(require('./routes/users.js'));
-// app.use(require('./routes/movies.js'));
 app.use(router);
 
 app.all('*', auth, () => {
@@ -48,7 +41,7 @@ app.use(errorLogger);
 
 app.use(errors());
 
-app.use(require('./middlewares/defaulError.js'));
+app.use(require('./middlewares/defaulError'));
 
 // start server
 app.listen(cfg.port, () => {

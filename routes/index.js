@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const userRouter = require('./users.js');
-const movieRouter = require('./movies.js');
-const { validateNewUser, validateLogin } = require('../middlewares/joiValidator.js');
-const { createUser, login } = require('../controllers/users.js');
-const auth = require('../middlewares/auth.js');
+const userRouter = require('./users');
+const movieRouter = require('./movies');
+const { validateNewUser, validateLogin } = require('../middlewares/joiValidator');
+const { createUser, login } = require('../controllers/users');
+const auth = require('../middlewares/auth');
 
 router.post('/signup', validateNewUser, createUser);
 router.post('/signin', validateLogin, login);
